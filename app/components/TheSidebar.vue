@@ -16,8 +16,8 @@ function isActive(item: SidenavMenuItem): boolean {
 <template>
     <aside id="app-menu" class="app-menu">
         <NuxtLink to="/app/dashboard" class="logo-box sticky top-0 flex min-h-topbar-height items-center justify-start px-6 backdrop-blur-xs">
-            <span class="logo-lg font-tourney text-2xl font-bold text-primary">Akuntansi</span>
-            <span class="logo-sm font-tourney text-2xl font-bold text-primary">A</span>
+            <span class="logo-lg font-tourney text-2xl font-bold text-primary">Kaskara</span>
+            <span class="logo-sm font-tourney text-2xl font-bold text-primary">K</span>
         </NuxtLink>
 
         <div class="absolute top-0 end-5 flex h-topbar items-center">
