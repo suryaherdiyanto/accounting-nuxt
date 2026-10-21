@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const sidenavOpen = useState('sidenavOpen', () => false)
 const colorMode = useState<'light' | 'dark'>('colorMode', () => 'light')
 
 function toggleColorMode() {
@@ -23,7 +24,7 @@ const languages = ['Indonesia', 'English']
     <div class="app-header min-h-topbar-height flex items-center sticky top-0 z-30 bg-(--topbar-background) border-b border-default-200">
         <div class="w-full flex items-center justify-between px-6">
             <div class="flex items-center gap-5">
-                <button id="button-toggle-menu" type="button" class="btn btn-icon size-9 bg-default-400/10 hover:bg-default-150 rounded">
+                <button id="button-toggle-menu" type="button" class="btn btn-icon size-9 bg-default-400/10 hover:bg-default-150 rounded" aria-label="Buka menu" @click="sidenavOpen = !sidenavOpen">
                     <i class="iconify lucide--align-left text-xl"></i>
                 </button>
 
