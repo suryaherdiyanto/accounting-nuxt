@@ -36,7 +36,7 @@ const id = useId()
                 :readonly="props.readonly"
                 :required="props.isRequired"
                 :aria-invalid="!!props.errorMessage"
-                :class="['form-input', { '!border-danger': props.errorMessage, 'rounded-s-none': $slots.prefix, 'rounded-e-none': $slots.append }]"
+                :class="['form-input', { 'border-danger!': props.errorMessage, 'rounded-s-none': $slots.prefix, 'rounded-e-none': $slots.append }]"
             >
             <div v-if="$slots.append" class="inline-flex items-center px-3 border border-s-0 rounded-e border-default-200 bg-default-100 text-default-600">
                 <slot name="append" />
