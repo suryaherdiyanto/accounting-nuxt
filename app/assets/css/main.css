@@ -19,6 +19,11 @@ Contact: themesdesign.in@gmail.com
 @import "../../../node_modules/preline/variants.css";
 @source "../../../node_modules/preline/dist.js";
 
+/* ========= Iconify Icons ========= */
+@plugin "@iconify/tailwind4" {
+  prefixes: tabler, lucide;
+}
+
 /* ========= Tailwind Plugin ========= */
 @plugin "@tailwindcss/typography";
 @plugin "@tailwindcss/forms";
