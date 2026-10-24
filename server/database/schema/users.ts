@@ -1,7 +1,7 @@
-import { index, integer, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core'
+import { index, bigserial, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core'
 
 export const users = pgTable('users', {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  id: bigserial('id', { mode: 'number' }).primaryKey(),
   email: varchar({ length: 255 }).notNull().unique(),
   rememberToken: varchar('remember_token', { length: 255 }),
   verifiedAt: timestamp('verified_at'),
