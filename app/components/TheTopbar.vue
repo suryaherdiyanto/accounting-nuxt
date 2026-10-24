@@ -17,6 +17,14 @@ const notificationTabs = [
 ]
 const activeNotificationTab = ref('semua')
 
+const { user, clear } = useUserSession()
+
+async function logout() {
+    await $fetch('/api/auth/logout', { method: 'POST' })
+    await clear()
+    await navigateTo('/login')
+}
+
 const languages = ['Indonesia', 'English']
 </script>
 
@@ -145,7 +153,7 @@ const languages = ['Indonesia', 'English']
                                     <span class="-top-1 -end-1 absolute size-2.5 bg-green-400 border-2 border-white rounded-full"></span>
                                 </div>
                                 <div>
-                                    <h6 class="mb-1 text-sm font-semibold text-default-800">Nama Pengguna</h6>
+                                    <h6 class="mb-1 text-sm font-semibold text-default-800">{{ user?.email }}</h6>
                                     <p class="text-default-500">Administrator</p>
                                 </div>
                             </div>
@@ -170,10 +178,10 @@ const languages = ['Indonesia', 'English']
 
                             <div class="border-t border-default-200 -mx-2 my-1"></div>
 
-                            <NuxtLink class="flex items-center gap-x-3.5 py-1.5 font-medium px-3 text-default-600 hover:bg-default-150 rounded" to="/login">
+                            <button type="button" class="flex items-center gap-x-3.5 py-1.5 font-medium px-3 text-default-600 hover:bg-default-150 rounded w-full" @click="logout">
                                 <i class="iconify lucide--log-out size-4"></i>
                                 Keluar
-                            </NuxtLink>
+                            </button>
                         </div>
                     </div>
                 </div>

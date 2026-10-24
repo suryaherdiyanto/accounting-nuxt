@@ -1,5 +1,22 @@
 <script setup lang="ts">
 const email = ref('')
+const errorMessage = ref('')
+const loading = ref(false)
+const { fetch: refreshSession } = useUserSession()
+
+async function login() {
+    errorMessage.value = ''
+    loading.value = true
+    try {
+        await $fetch('/api/auth/login', { method: 'POST', body: { email: email.value } })
+        await refreshSession()
+        await navigateTo('/app/dashboard')
+    } catch (e: any) {
+        errorMessage.value = e?.data?.message || 'Terjadi kesalahan, silakan coba lagi.'
+    } finally {
+        loading.value = false
+    }
+}
 </script>
 
 <template>
@@ -10,17 +27,18 @@ const email = ref('')
                 <p class="text-base text-default-500">Masuk untuk melanjutkan ke akun Anda.</p>
             </div>
 
-            <form class="text-left w-full mt-10" @submit.prevent>
+            <form class="text-left w-full mt-10" @submit.prevent="login">
                 <AppTextInput
                     v-model="email"
                     label="Alamat Email"
                     type="email"
                     placeholder="anda@contoh.com"
                     autocomplete="email"
+                    :error-message="errorMessage"
                     is-required
                 />
 
-                <AppButton type="submit" class="w-full mt-6">Login dengan Email</AppButton>
+                <AppButton type="submit" class="w-full mt-6" :class="{ 'opacity-60 pointer-events-none': loading }">Login dengan Email</AppButton>
             </form>
 
             <div class="my-9 relative text-center before:absolute before:top-2.5 before:start-0 before:end-0 before:w-full before:border-t before:border-default-200 before:-z-0">

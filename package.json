@@ -17,10 +17,12 @@
     "drizzle-orm": "^0.45.4",
     "flatpickr": "^4.6.13",
     "nuxt": "^4.6.2",
+    "nuxt-auth-utils": "^0.5.32",
     "pg": "^8.23.1",
     "preline": "^4.2.0",
     "vue": "^3.5.43",
-    "vue-router": "^5.4.0"
+    "vue-router": "^5.4.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@iconify-json/lucide": "^1.2.147",

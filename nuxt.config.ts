@@ -2,7 +2,13 @@
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/google-fonts'],
+  modules: ['@nuxtjs/google-fonts', 'nuxt-auth-utils'],
+  runtimeConfig: {
+    session: {
+      password: process.env.NUXT_APP_SECRET || '',
+      maxAge: 60 * 60 * 24 * 7
+    }
+  },
   googleFonts: {
     families: {
       'DM Sans': [100, 200, 300, 400, 500, 600, 700, 800, 900],
