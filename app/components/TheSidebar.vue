@@ -7,6 +7,38 @@ function toggleMenu(key: string) {
     else openMenus.value.add(key)
 }
 
+// .sub-menu already has `transition-all duration-300`, so only the inline height/margin need to change
+const COLLAPSE_DURATION = 300
+
+function onEnter(el: Element, done: () => void) {
+    const menu = el as HTMLElement
+    menu.style.height = '0px'
+    menu.style.marginTop = '0px'
+    void menu.offsetHeight
+    menu.style.height = `${menu.scrollHeight}px`
+    menu.style.marginTop = ''
+    setTimeout(done, COLLAPSE_DURATION)
+}
+
+function onAfterEnter(el: Element) {
+    (el as HTMLElement).style.height = ''
+}
+
+function onLeave(el: Element, done: () => void) {
+    const menu = el as HTMLElement
+    menu.style.height = `${menu.scrollHeight}px`
+    void menu.offsetHeight
+    menu.style.height = '0px'
+    menu.style.marginTop = '0px'
+    setTimeout(done, COLLAPSE_DURATION)
+}
+
+function onAfterLeave(el: Element) {
+    const menu = el as HTMLElement
+    menu.style.height = ''
+    menu.style.marginTop = ''
+}
+
 function isActive(item: SidenavMenuItem): boolean {
     if (item.to && item.to !== '#') return route.path === item.to
     return !!item.children?.some(isActive)
@@ -42,7 +74,8 @@ function isActive(item: SidenavMenuItem): boolean {
                                     <span class="menu-arrow"><i class="iconify tabler--chevron-right transition-transform" :class="{ 'rotate-90': openMenus.has(`${i}`) }"></i></span>
                                 </a>
 
-                                <ul v-show="openMenus.has(`${i}`)" class="sub-menu">
+                                <Transition :css="false" @enter="onEnter" @after-enter="onAfterEnter" @leave="onLeave" @after-leave="onAfterLeave">
+                                    <ul v-show="openMenus.has(`${i}`)" class="sub-menu">
                                     <template v-for="(child, j) in item.children" :key="j">
                                         <li class="menu-item" :class="{ active: isActive(child) }">
                                             <template v-if="child.children">
@@ -51,13 +84,15 @@ function isActive(item: SidenavMenuItem): boolean {
                                                     <span class="menu-arrow"><i class="iconify tabler--chevron-right transition-transform" :class="{ 'rotate-90': openMenus.has(`${i}-${j}`) }"></i></span>
                                                 </a>
 
-                                                <ul v-show="openMenus.has(`${i}-${j}`)" class="sub-menu">
-                                                    <li v-for="(sub, k) in child.children" :key="k" class="menu-item">
-                                                        <NuxtLink :to="sub.to ?? '#'" class="menu-link" active-class="active">
-                                                            <span class="menu-text">{{ sub.label }}</span>
-                                                        </NuxtLink>
-                                                    </li>
-                                                </ul>
+                                                <Transition :css="false" @enter="onEnter" @after-enter="onAfterEnter" @leave="onLeave" @after-leave="onAfterLeave">
+                                                    <ul v-show="openMenus.has(`${i}-${j}`)" class="sub-menu">
+                                                        <li v-for="(sub, k) in child.children" :key="k" class="menu-item">
+                                                            <NuxtLink :to="sub.to ?? '#'" class="menu-link" active-class="active">
+                                                                <span class="menu-text">{{ sub.label }}</span>
+                                                            </NuxtLink>
+                                                        </li>
+                                                    </ul>
+                                                </Transition>
                                             </template>
 
                                             <NuxtLink v-else :to="child.to ?? '#'" class="menu-link" :class="{ active: isActive(child) }">
@@ -65,7 +100,8 @@ function isActive(item: SidenavMenuItem): boolean {
                                             </NuxtLink>
                                         </li>
                                     </template>
-                                </ul>
+                                    </ul>
+                                </Transition>
                             </template>
 
                             <NuxtLink v-else :to="item.to ?? '#'" class="menu-link" :class="{ active: isActive(item) }">
