@@ -11,7 +11,7 @@ function run() {
 
 	// write the key to .env file as APP_KEY
 	//Remove existing APP_KEY line if it exists
-	const updatedEnvContent = envContent.replace(/^APP_KEY=.*$/m, 'APP_KEY=' + randomBase64);
+	const updatedEnvContent = envContent.replace(/^APP_KEY=.*$/m, 'NUXT_APP_SECRET=' + randomBase64);
 	writeFileSync('.env', `${updatedEnvContent}`);
 
 	process.exit(0);
