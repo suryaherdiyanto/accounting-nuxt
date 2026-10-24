@@ -1,11 +1,11 @@
-export default defineNuxtPlugin(() => {
-  const router = useRouter()
-
+export default defineNuxtPlugin((nuxtApp) => {
   import('preline').then(({ HSStaticMethods }) => {
-    HSStaticMethods.autoInit()
+    const init = () => nextTick(() => HSStaticMethods.autoInit())
 
-    router.afterEach(() => {
-      nextTick(() => HSStaticMethods.autoInit())
-    })
+    // page:finish fires once the new page and layout are rendered, router.afterEach fires too early
+    // (e.g. after login, when the dashboard layout is not mounted yet)
+    nuxtApp.hook('page:finish', init)
+    nuxtApp.hook('app:mounted', init)
+    init()
   })
 })
