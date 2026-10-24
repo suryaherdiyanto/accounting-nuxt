@@ -8,11 +8,16 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-	"key:generate": "node ./scripts/key-generate.js"
+    "key:generate": "node ./scripts/key-generate.js",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "drizzle-orm": "^0.45.4",
     "flatpickr": "^4.6.13",
     "nuxt": "^4.6.2",
+    "pg": "^8.23.1",
     "preline": "^4.2.0",
     "vue": "^3.5.43",
     "vue-router": "^5.4.0"
@@ -25,6 +30,9 @@
     "@tailwindcss/forms": "^0.5.11",
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.3",
+    "@types/pg": "^8.23.1",
+    "dotenv": "^18.0.9",
+    "drizzle-kit": "^0.31.11",
     "tailwindcss": "^4.3.3"
   }
 }
