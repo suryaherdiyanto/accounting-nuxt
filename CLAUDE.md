@@ -23,3 +23,17 @@ Input Form Spec:
 - Has `search` emit event
 - Has `order` emit event when user click on the each table head, this order event is optional when it is defined in the props
 - Has options to have ability to select/check rows, it will returns selected row data.
+
+# Query Data Pattern
+- All database operation should be done under `./server/repositories` folder.
+- All logic related to data query should be done under `./server/services` folder.
+
+# Querying Style
+Should use drizzle-orm prefer relational query style instead of sql like query, example:
+```ts
+const result = await db.query.users.findMany({
+  with: {
+    posts: true,
+  },
+});
+```
