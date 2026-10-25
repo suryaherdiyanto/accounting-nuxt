@@ -2,7 +2,7 @@
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/google-fonts', 'nuxt-auth-utils'],
+  modules: ['@nuxtjs/google-fonts', 'nuxt-auth-utils', '@nuxtjs/test-utils/module'],
   runtimeConfig: {
     session: {
       password: process.env.NUXT_APP_SECRET || '',
