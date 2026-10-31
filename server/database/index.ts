@@ -8,6 +8,8 @@ const pool = new Pool({
   user: process.env.PG_USER,
   password: process.env.PG_PASSWORD,
   database: process.env.PG_DB,
+  max: 10,
+  idleTimeoutMillis: 30000
 })
 
 export const db = drizzle(pool, { schema })
