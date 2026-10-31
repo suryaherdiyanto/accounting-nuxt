@@ -18,6 +18,9 @@ async function login() {
         loading.value = false
     }
 }
+
+const config = useRuntimeConfig()
+useHead({ title: config.public.appName + ' - Login' })
 </script>
 
 <template>

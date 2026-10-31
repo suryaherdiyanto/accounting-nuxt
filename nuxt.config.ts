@@ -4,6 +4,9 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineNuxtConfig({
   modules: ['@nuxtjs/google-fonts', 'nuxt-auth-utils', '@nuxt/test-utils/module'],
   runtimeConfig: {
+    public: {
+      appName: process.env.APP_NAME
+    }
   },
   googleFonts: {
     families: {
