@@ -3,6 +3,7 @@ const email = ref('')
 const errorMessage = ref('')
 const loading = ref(false)
 const { fetch: refreshSession } = useUserSession()
+const toast = useToast()
 
 async function login() {
     errorMessage.value = ''
@@ -12,7 +13,7 @@ async function login() {
         await refreshSession()
         await navigateTo('/app/dashboard')
     } catch (e: any) {
-        errorMessage.value = e?.data?.message || 'Terjadi kesalahan, silakan coba lagi.'
+        toast.error(e?.data?.message || 'Terjadi kesalahan, silakan coba lagi.')
     } finally {
         loading.value = false
     }
