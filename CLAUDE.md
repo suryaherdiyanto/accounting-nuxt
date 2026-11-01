@@ -37,3 +37,7 @@ const result = await db.query.users.findMany({
   },
 });
 ```
+
+# Testing
+All services must covered by e2e test, you can see on `./test/e2e/user.service.test.ts` for example, the test must cover the happy path and
+the unhappy path, for example if the user input invalid data or the data not found in the database.
