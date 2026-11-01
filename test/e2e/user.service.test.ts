@@ -4,8 +4,8 @@ import { afterAll, beforeAll, describe, expect, test } from "vitest";
 import { drizzle } from "drizzle-orm/node-postgres";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 import { users } from "../../server/database/schema/users"
-import { db } from "../../server/database";
 import userService from "../../server/services/user.service";
+import { db } from "../../server/database";
 
 const pool = new Pool({
   host: process.env.PG_TEST_HOST,
@@ -17,7 +17,7 @@ const pool = new Pool({
 
 describe('user service', () => {
 	beforeAll(async () => {
-		await migrate(drizzle(pool), { migrationsFolder: './server/database/migrations'})
+		await migrate(drizzle(pool), { migrationsFolder: './server/database/migrations', migrationsTable: '__drizzle_migrations'})
 		await db.insert(users).values({
 			email: "johndoe@example.com",
 			verifiedAt: new Date(),
@@ -25,6 +25,7 @@ describe('user service', () => {
 	})
 	afterAll(async () => {
 		await pool.query('DROP TABLE IF EXISTS users CASCADE')
+		await pool.query('DROP TABLE IF EXISTS drizzle.__drizzle_migrations CASCADE')
 		await pool.end()
 	})
 
@@ -33,5 +34,21 @@ describe('user service', () => {
 
 		expect(user).not.toBeNull()
 		expect(user?.email).toEqual("johndoe@example.com")
+	})
+
+	test('get user by email that does not exist', async () => {
+		const user = await userService.findByEmail("test@kaskara.id")
+		expect(user).toBeNull()
+	})
+
+	test('get user by id', async () => {
+		const user = await userService.findById(1)
+
+		expect(user).not.toBeNull()
+	})
+
+	test('get user by id that does not exist', async () => {
+		const user = await userService.findById(999)
+		expect(user).toBeNull()
 	})
 })
